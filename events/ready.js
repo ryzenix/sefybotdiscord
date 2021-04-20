@@ -1,5 +1,5 @@
 const web = require('../util/web.js');
-const { randomStatus } = require('../util/util')
+const { randomStatus, botSitePost } = require('../util/util');
 
 module.exports = async client => {
   if (client.user.id !== '769411215855190026') {
@@ -31,10 +31,11 @@ module.exports = async client => {
   await client.verifytimers.fetchAll();
   console.log(`[DISCORD] Logged in as ${client.user.tag}!`);
   web.init(client);
-  const activity = randomStatus(client);
   client.user.setActivity('just woke up...', { type: 'PLAYING' });
+  botSitePost(client);
   client.setInterval(() => {
     const activity = randomStatus(client);
 		client.user.setActivity(activity.text, { type: activity.type });
-	}, 120000);
+	}, 240000);
+  client.setInterval(() => botSitePost(client), 3600000);
 };
